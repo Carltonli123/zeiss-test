@@ -10,9 +10,15 @@
       <td mat-cell *matCellDef="let element"> {{element.machine_type}} </td>
     </ng-container>
   
-    <ng-container matColumnDef="status">
+    <ng-container matColumnDef="status" >
       <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      <td mat-cell *matCellDef="let element"  > 
+        <ng-template [ngIf]="element.status=='running'"><div  style="color:blue;">{{element.status}}</div></ng-template>
+        <ng-template [ngIf]="element.status=='idle'"><div  style="color:yellow;">{{element.status}}</div></ng-template>
+        <ng-template [ngIf]="element.status=='finished'"><div  style="color:green;">{{element.status}}</div></ng-template>
+        <ng-template [ngIf]="element.status=='errored'"><div  style="color:red;">{{element.status}}</div></ng-template> 
+        <ng-template [ngIf]="element.status=='repaired'"><div  style="color:pink;">{{element.status}}</div></ng-template> 
+    </td>
     </ng-container>
 
     <ng-container matColumnDef="longitude">
@@ -53,3 +59,21 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+<div #tableModal class="modal">
+    <!-- Init Modal content -->
+    <div class="modal-content">
+      <span #modalCloseBtn class="close" (click)="closeModal()">&times;</span>
+      <table>
+          <tr>
+              <th>TimeStamp</th>
+              <th>Status</th>
+          </tr>
+          <tr *ngFor = "let event of selectedEvents">
+              <td class="modaltd">{{event.timestamp}}</td>
+              <td class="modaltd">{{event.status}}</td>
+
+          </tr>
+      </table>
+    </div>
+</div>

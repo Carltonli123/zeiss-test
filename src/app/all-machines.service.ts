@@ -21,4 +21,10 @@ export class AllMachinesService {
   showAllMachines(){
     return this.http.get(`${this.targetURL}`);
   }
+
+  getMachineById(id:string){
+    let getMachineUrl = this.targetURL + '/' + id;
+    return this.http.get(`${getMachineUrl}`);
+  }
+     
 }
